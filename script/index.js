@@ -1,7 +1,7 @@
 var inquirer = require("inquirer");
 var axios = require("axios");
 var fs = require("fs");
-
+const doc = require('./doc.js')
 inquirer
     .prompt([
         {
@@ -24,18 +24,19 @@ inquirer
             .get("https://api.github.com/users/" + queryName)
             .then(function (res) {
                 var info = res.data;
-                var profile = (queryColor, info) => {
-                    return `# <h1 style= ${queryColor}>${info.name}</h1>  
-                    ${info.avatar_url}  
-                    Bio:${info.bio}  
-                    User Url: ${info.url}  
-                    Repos: ${info.url}  
-                    Followers: ${info.followers}  
-                    Following: ${info.following}  
-                    Location: ${info.location}  `
-                }
+                // var profile = (queryColor, info) => {
+                //     return `# <span style= ${queryColor}>${info.name}</span>  
+                //     ${info.avatar_url}  
+                //     Bio:${info.bio}  
+                //     User Url: ${info.url}  
+                //     Repos: ${info.url}  
+                //     Followers: ${info.followers}  
+                //     Following: ${info.following}  
+                //     Location: ${info.location}  `;
+                // }
+                const saved = doc(info, queryColor)
                 console.log(info);
-                fs.writeFile("profile.md", JSON.stringify(profile), function(err){
+                fs.writeFile(response.username+".md", saved, function(err){
                     if (err) {console.log(err);}
                     else {console.log("Commit logged!");}
                 });
