@@ -24,14 +24,20 @@ inquirer
             .get("https://api.github.com/users/" + queryName)
             .then(function (res) {
                 var info = res.data;
+                var profile = (queryColor, info) => {
+                    return `# <h1 style= ${queryColor}>${info.name}</h1>  
+                    ${info.avatar_url}  
+                    Bio:${info.bio}  
+                    User Url: ${info.url}  
+                    Repos: ${info.url}  
+                    Followers: ${info.followers}  
+                    Following: ${info.following}  
+                    Location: ${info.location}  `
+                }
                 console.log(info);
-                fs.writeFile("profile.md", info.name, info.bio, info.url, info.public_repos, info.followers, info.following, info.location, function(err){
-                    if (err) {
-                        console.log(err);
-                      }
-                      else {
-                        console.log("Commit logged!");
-                      }
+                fs.writeFile("profile.md", JSON.stringify(profile), function(err){
+                    if (err) {console.log(err);}
+                    else {console.log("Commit logged!");}
                 });
 
             })
